@@ -37,6 +37,6 @@ try:
 except Exception as ex:
     print(ex)
 finally:
-    connection.close()
+    init_connection.close()
     print('Conexion finalizada')
 
