@@ -1,20 +1,17 @@
 import streamlit as st
-import numpy as np
 import pandas as pd
 import psycopg2 as psy
 import pandas.io.sql as psql
 
+
 def init_connection():
     return psy.connect(**st.secrets["postgres"])
 
-st.set_page_config(
-    page_title="Real-Time Data Science Dashboard",
-    page_icon="✅",
-    layout="wide",
-)
-st.title("Live data Dashboard")
 
+st.set_page_config(page_title="Real-Time Data Science Dashboard", page_icon="✅", layout="wide")
+st.title("Live data Dashboard")
 placeholder = st.empty()
+
 try:
     connection = init_connection()
     print("Conexion exitosa")
@@ -29,14 +26,15 @@ try:
     GROUP BY fecha, p.codigo_proveedor_pp, c.nombre_tienda""", connection)
     tienda_filter = st.selectbox("Seleccione la tienda", pd.unique(df["nombre_tienda"]))
     venta = df['ventas'].sum()
-    st.metric(label="vta",value= venta ,label_visibility= "visible")
+    st.metric(label="vta", value=venta, label_visibility="visible")
     df = df[df["nombre_tienda"] == tienda_filter]
     st.dataframe(df)
 
 
 except Exception as ex:
     print(ex)
-finally:
-    init_connection.close()
-    print('Conexion finalizada')
 
+
+finally:
+    init_connection().close()
+    print('Conexion finalizada')
