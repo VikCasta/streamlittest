@@ -1,7 +1,5 @@
-from _datetime import datetime
 import streamlit as st
 import numpy as np
-import plotly_express as px
 import pandas as pd
 import psycopg2 as psy
 import pandas.io.sql as psql
